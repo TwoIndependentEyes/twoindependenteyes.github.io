@@ -1,45 +1,176 @@
-#center-column {
+#subpage-wrap {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+}
+
+#fig-left,
+#fig-right {
+  position: absolute;
+  top: 0;
+  width: 20vw;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+#fig-left {
+  left: 0;
+}
+
+#fig-right {
+  right: 0;
+}
+
+#back-button {
+  margin-top: 3em;
+  position: relative;
   z-index: 1;
-  contain: layout;
-
-  a {
-    font-style: italic;
-    font-size: clamp(20px, 2.25vw, 26px);
-    color: #333;
-    text-decoration: none;
-  }
 }
 
-#eyes-graphic {
-  position: absolute;
-  inset: -75% 100% auto auto;
-  height: 225%;
-  width: auto;
-  pointer-events: none;
-  opacity: 0.45;
-}
+#film-index {
+  width: 100%;
+  /* max-width: 900px; */
+  position: relative;
+  z-index: 1;
+  image-rendering: pixelated;
 
-#person-graphic {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  contain: strict;
-
-  img {
+  &::before {
+    content: "";
     position: absolute;
-    width: 70vw;
-    right: -10%;
-    bottom: -70%;
+    inset: -32px;
+    background-color: #c4beae;
+    filter: blur(32px) opacity(0.9);
+    z-index: -1;
   }
+}
+
+.film-section {
+  margin-bottom: 2em;
+
+  &:not(:last-child)::after {
+    content: "";
+    display: block;
+    height: 2.5px;
+    background-image: url("../assets/images/dotted-line.webp");
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    margin-block: 4em;
+  }
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  padding-bottom: 0.6em;
+  font-size: clamp(14px, 1.2vw, 20px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #111;
+  font-style: normal;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 2em;
+  padding: 1.4em 0;
+  margin-bottom: -4px;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  transition: opacity 0.2s ease;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 10px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    filter: blur(1px);
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 5%,
+      black 95%,
+      transparent
+    );
+  }
+
+  &::before {
+    bottom: 98%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.45), transparent);
+  }
+
+  &::after {
+    top: 98%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45), transparent);
+  }
+}
+
+.film-section:has(.entry:hover) .entry:not(:hover) {
+  opacity: 0.3;
+}
+
+.entry:hover {
+  z-index: 1;
+
+  &::before,
+  &::after {
+    opacity: 0.6;
+  }
+}
+
+.entry-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-image: url("../assets/images/rough-line.webp");
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.entry-line--top {
+  top: 0;
+}
+
+.entry-line--bottom {
+  bottom: 0;
+}
+
+.entry-title {
+  font-size: clamp(18px, 1.8vw, 26px);
+  font-weight: normal;
+  font-style: normal;
+  margin: 0 0 0.3em;
+  letter-spacing: -0.01em;
+}
+
+.entry-type {
+  font-size: clamp(10px, 0.75vw, 12px);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #111;
+  font-style: normal;
+  margin: 0;
+}
+
+.entry-logline {
+  font-style: italic;
+  font-size: clamp(17px, 1.4vw, 22px);
+  color: #111;
+  margin: 0;
+  align-self: center;
+  line-height: 1.6;
 }
 
 @media (max-width: 767px) {
-  #person-graphic img {
-    width: 90vw;
-    bottom: -15%;
+  .entry {
+    grid-template-columns: 1fr;
+    gap: 0.75em;
   }
 }
